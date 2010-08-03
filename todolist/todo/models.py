@@ -21,11 +21,14 @@ class Item(models.Model):
                 "<div style='height: 4px; width: %dpx; background: #555; '></div></div>" % self.progress
     progress_.allow_tags = True
 
+    def delete(self):
+        return "<a href='/item_action/delete/%d/'>Delete</a>" % self.pk
+    delete.allow_tags = True
 
     def mark_done(self):
-        return "<a href='/mark_done/%d/'>Done</a>" % self.pk
+        return "<a href='/item_action/done/%d/'>Done</a>" % self.pk
     mark_done.allow_tags = True
     
     def toggle_onhold(self):
-        return "<a href='/toggle_onhold/%d/'>Toggle OnHold</a>" % self.pk
+        return "<a href='/item_action/onhold/%d/'>OnHold</a>" % self.pk
     toggle_onhold.allow_tags = True

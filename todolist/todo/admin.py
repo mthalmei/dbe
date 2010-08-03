@@ -6,7 +6,7 @@ from django.utils.encoding import force_unicode
 from django.http import HttpResponse, HttpResponseRedirect
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["name", "priority", "difficulty", "created", "progress_", "done", "mark_done", "onhold", "toggle_onhold", "user"]
+    list_display = ["name", "priority", "difficulty", "created", "progress_", "done", "mark_done", "onhold", "toggle_onhold", "user", "delete"]
     search_fields = ["name"]
     list_filter = ["priority", "difficulty", "onhold", "done"]
 

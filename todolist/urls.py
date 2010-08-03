@@ -11,8 +11,7 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^mark_done/(\d*)/$', "todolist.todo.views.mark_done"),
-    (r'^toggle_onhold/(\d*)/$', "todolist.todo.views.toggle_onhold"),
+    (r'^item_action/(done|delete|onhold)/(\d*)/$', "todolist.todo.views.item_action"),
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
