@@ -1,4 +1,4 @@
-from todolist.todo.models import *
+from dbe.todo.models import *
 from django.http import HttpResponseRedirect, HttpResponse
 
 def item_action(request, action, pk):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from todolist.todo.models import Item, DateTime
+from dbe.todo.models import Item, DateTime
 
 from django.utils.translation import ugettext as _
 from django.utils.encoding import force_unicode
