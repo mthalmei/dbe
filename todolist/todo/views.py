@@ -34,3 +34,12 @@ def onhold_done(request, mode, action, pk):
     item.save()
     return HttpResponse('0')
 
+def progress(request, pk):
+    """Set task progress."""
+    p = request.POST
+    if "progress" in p:
+        item = Item.objects.get(pk=pk)
+        item.progress = int(p["progress"])
+        item.save()
+    return HttpResponse('0')
+

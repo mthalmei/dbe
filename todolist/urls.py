@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^item_action/(done|delete|onhold)/(\d*)/$', "todolist.todo.views.item_action"),
     (r"^onhold_done/(onhold|done)/(on|off)/(\d*)/$", "todolist.todo.views.onhold_done"),
+    (r"^progress/(\d*)/$", "todolist.todo.views.progress"),
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
