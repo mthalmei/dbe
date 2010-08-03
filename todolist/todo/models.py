@@ -11,3 +11,7 @@ class Item(models.Model):
     priority = models.IntegerField(default=0)
     difficulty = models.IntegerField(default=0)
     done = models.BooleanField(default=False)
+
+    def mark_done(self):
+        return "<a href='/mark_done/%d/'>Done</a>" % self.pk
+    mark_done.allow_tags = True
