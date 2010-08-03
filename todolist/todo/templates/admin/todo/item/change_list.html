@@ -27,10 +27,61 @@
 (function($) {
     $(document).ready(function($) {
         $("tr input.action-select").actions();
+
+        {% for obj in cl.result_list %}
+
+            // Done toggle
+            $('#done_{{ obj.pk }}').click(function() {
+
+                if ($(this).html().indexOf("icon-yes") != -1) { $action = "off"; }
+                else { $action = "on"; }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/onhold_done/done/" + $action + "/{{ obj.pk }}/",
+                    success: function(action) {
+                        if ($action == "on") {
+                            $action = "yes";
+                        }
+                        else {
+                           $action = "no"
+                        }
+                        $('#done_{{ obj.pk }}').html("<img class='btn' src='/media/img/admin/icon-"
+                            +$action+".gif' />");
+                    }
+                })
+            });
+            $('#onhold_{{ obj.pk }}').click(function() {
+
+                if ($(this).html().indexOf("icon-yes") != -1) { $action = "off"; }
+                else { $action = "on"; }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/onhold_done/onhold/" + $action + "/{{ obj.pk }}/",
+                    success: function(action) {
+                        if ($action == "on") {
+                            $action = "yes";
+                        }
+                        else {
+                           $action = "no"
+                        }
+                        $('#onhold_{{ obj.pk }}').html("<img class='btn' src='/media/img/admin/icon-"
+                            +$action+".gif' />");
+                    }
+                })
+            });
+
+        {% endfor %}
     });
 })(django.jQuery);
 </script>
 {% endif %}{% endif %}
+
+<style type="text/css">
+    .btn { cursor: pointer; }
+</style>
+
 {% endblock %}
 
 {% block bodyclass %}change-list{% endblock %}

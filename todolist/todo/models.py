@@ -25,10 +25,21 @@ class Item(models.Model):
         return "<a href='/item_action/delete/%d/'>Delete</a>" % self.pk
     delete.allow_tags = True
 
-    def mark_done(self):
-        return "<a href='/item_action/done/%d/'>Done</a>" % self.pk
-    mark_done.allow_tags = True
+    def done_(self):
+        if self.done:
+            btn = "<div id='done_%s'><img class='btn' src='/media/img/admin/icon-yes.gif' /></div>"
+        else:
+            btn = "<div id='done_%s'><img class='btn' src='/media/img/admin/icon-no.gif' /></div>"
+        return btn % self.pk
+    done_.allow_tags = True
+    done_.admin_order_field = "done"
     
-    def toggle_onhold(self):
-        return "<a href='/item_action/onhold/%d/'>OnHold</a>" % self.pk
-    toggle_onhold.allow_tags = True
+    def onhold_(self):
+        if self.onhold:
+            btn = "<div id='onhold_%s'><img class='btn' src='/media/img/admin/icon-yes.gif' /></div>"
+        else:
+            btn = "<div id='onhold_%s'><img class='btn' src='/media/img/admin/icon-no.gif' /></div>"
+        return btn % self.pk
+    onhold_.allow_tags = True
+    onhold_.admin_order_field = "onhold"
+
