@@ -6,7 +6,7 @@ from django.utils.encoding import force_unicode
 from django.http import HttpResponse, HttpResponseRedirect
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["name", "priority", "difficulty", "created", "done", "mark_done", "onhold", "toggle_onhold"]
+    list_display = ["name", "priority", "difficulty", "created", "progress_", "done", "mark_done", "onhold", "toggle_onhold", "user"]
     search_fields = ["name"]
     list_filter = ["priority", "difficulty", "onhold", "done"]
 
@@ -41,7 +41,10 @@ class DateAdmin(admin.ModelAdmin):
             return HttpResponseRedirect(request.path)
         else:
             self.message_user(request, msg)
-
+            for item in Item.objects.filter(created=obj):
+                if not item.user:
+                    item.user = request.user
+                    item.save()
             return HttpResponseRedirect("/admin/todo/item/")
 
 admin.site.register(Item, ItemAdmin)
