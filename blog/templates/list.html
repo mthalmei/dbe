@@ -1,11 +1,26 @@
 {% extends "bbase.html" %}
 
+{% block sidebar %}
+    <style type="text/css">
+        #sidebar { float: right; border: 1px dotted #ccc; padding: 4px; }
+    </style>
+    <div id="sidebar">
+        Monthly Archive<br />
+        {% for month in months %}
+            {% ifchanged month.0 %} {{ month.0 }} <br /> {% endifchanged %}
+            <a href="/blog/month/{{ month.0 }}/{{ month.1 }}/">{{ month.2 }}</a> <br />
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
+
 {% block content %}
     <div class="main">
 
         <!-- Posts  -->
         <ul>
-            {% for post in posts.object_list %}
+            {% for post in post_list %}
                 <div class="title">{{ post.title }}</div>
                 <ul>
                     <div class="time">{{ post.created }}</div>
@@ -16,7 +31,7 @@
         </ul>
 
         <!-- Next/Prev page links  -->
-        {% if posts.object_list and posts.paginator.num_pages > 1 %}
+        {% if not archive and posts.object_list and posts.paginator.num_pages > 1 %}
         <div class="pagination" style="margin-top: 20px; margin-left: -20px; ">
             <span class="step-links">
                 {% if posts.has_previous %}
