@@ -83,3 +83,13 @@ def month(request, year, month):
     posts = Post.objects.filter(created__year=year, created__month=month)
     return render_to_response("list.html", dict(post_list=posts, user=request.user, months=mkmonth_lst(), archive=True))
 
+
+def delete_comment(request, pk=None):
+    """Delete comment(s) with primary key 'pk' or with pks in POST."""
+    if request.user.is_staff:
+        if not pk: pklist = request.POST.getlist("delete")
+        else: pklist = [pk]
+
+        for pk in pklist:
+            Comment.objects.filter(pk=int(pk)).delete()
+        return HttpResponseRedirect(request.META["HTTP_REFERER"])
