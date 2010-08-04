@@ -19,6 +19,9 @@ def main(request):
     except (InvalidPage, EmptyPage):
         posts = paginator.page(paginator.num_pages)
 
+    for post in posts.object_list:
+        post.num_comments = Comment.objects.filter(post=post).count()
+
     return render_to_response("list.html", dict(posts=posts, post_list=posts.object_list, user=request.user, months=mkmonth_lst()))
 
 class CommentForm(ModelForm):

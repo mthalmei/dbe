@@ -25,7 +25,7 @@
                 <ul>
                     <div class="time">{{ post.created }}</div>
                     <div class="body">{{ post.body|linebreaks }}</div>
-                    <div class="commentlink"><a href="/blog/{{ post.pk }}/">Comments</a></div>
+                    <div class="commentlink"><a href="/blog/{{ post.pk }}/">Comments ({{ post.num_comments }})</a></div>
                 </ul>
             {% endfor %}
         </ul>
