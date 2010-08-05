@@ -13,6 +13,12 @@ class Album(models.Model):
     def __unicode__(self):
         return self.title
 
+    def images(self):
+        lst = [x.image.name for x in self.image_set.all()]
+        lst = ["<a href='/media/%s'>%s</a>" % (x, x.split('/')[-1]) for x in lst]
+        return join(lst, ', ')
+    images.allow_tags = True
+
 class Tag(models.Model):
     tag = models.CharField(max_length=50)
 

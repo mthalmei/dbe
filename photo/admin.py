@@ -3,7 +3,7 @@ from django.contrib import admin
 
 class AlbumAdmin(admin.ModelAdmin):
     search_fields = ["title"]
-    list_display = ["title"]
+    list_display = ["title", "images"]
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ["tag"]
