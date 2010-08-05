@@ -5,6 +5,9 @@ import os
 from string import join
 from PIL import Image as PImage
 from settings import MEDIA_ROOT
+from django.core.files import File
+from os.path import join as pjoin
+from tempfile import *
 
 class Album(models.Model):
     title = models.CharField(max_length=60)
@@ -35,12 +38,31 @@ class Image(models.Model):
     width = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(User, null=True, blank=True)
+    thumbnail = models.ImageField(upload_to="images/", blank=True, null=True)
+    thumbnail2 = models.ImageField(upload_to="images/", blank=True, null=True)
 
     def save(self, *args, **kwargs):
         """Save Image dimensions."""
         super(Image, self).save(*args, **kwargs)
         im = PImage.open(os.path.join(MEDIA_ROOT, self.image.name))
         self.width, self.height = im.size
+
+        # large thumbnail
+        fn, ext = os.path.splitext(self.image.name)
+        im.thumbnail((128,128), PImage.ANTIALIAS)
+        thumb_fn = fn + "-thumb2" + ext
+        tf2 = NamedTemporaryFile()
+        im.save(tf2.name, "JPEG")
+        self.thumbnail2.save(thumb_fn, File(open(tf2.name)), save=False)
+        tf2.close()
+
+        # small thumbnail
+        im.thumbnail((40,40), PImage.ANTIALIAS)
+        thumb_fn = fn + "-thumb" + ext
+        tf = NamedTemporaryFile()
+        im.save(tf.name, "JPEG")
+        self.thumbnail.save(thumb_fn, File(open(tf.name)), save=False)
+
         super(Image, self).save(*args, **kwargs)
 
     def size(self):
@@ -58,7 +80,6 @@ class Image(models.Model):
         lst = [x[1] for x in self.albums.values_list()]
         return str(join(lst, ', '))
     
-    def thumbnail(self):
-        return """<a href="/media/%s"><img border="0" alt="" src="/media/%s" height="40" /></a>""" % ((self.image.name, self.image.name))
-
-    thumbnail.allow_tags = True
+    def thumbnail_(self):
+        return """<a href="/media/%s"><img border="0" alt="" src="/media/%s" height="40" /></a>""" % ((self.image.name, self.thumbnail.name))
+    thumbnail_.allow_tags = True

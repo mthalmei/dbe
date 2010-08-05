@@ -10,7 +10,7 @@ class TagAdmin(admin.ModelAdmin):
 
 class ImageAdmin(admin.ModelAdmin):
     #search_fields = ["title"]
-    list_display = ["__unicode__", "title", "user", "rating", "size", "tags_", "albums_", "thumbnail", "created"]
+    list_display = ["__unicode__", "title", "user", "rating", "size", "tags_", "albums_", "thumbnail_", "created"]
     list_filter = ["tags", "albums", "user"]
 
     def save_model(self, request, obj, form, change):
