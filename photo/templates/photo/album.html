@@ -3,18 +3,15 @@
 {% block content %}
     <div class="main">
 
-        <!-- Albums  -->
+        <!-- Images  -->
         <ul>
-            {% for album in albums.object_list %}
-            <div class="title"><a href="{% url photo.views.album album.pk %}">{{ album.title }}</a>
-                    ({{ album.image_set.count }} images)</div>
-                <ul>
-                    {% for img in album.images %}
-                        <a href="/media/{{ img.image.name }}"><img border="0" alt=""
-                            src="/media/{{ img.thumbnail2.name }}" /></a>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
+            <div class="title">{{ album.title }}</div>
+            <ul>
+                {% for img in images.object_list %}
+                    <a href="/media/{{ img.image.name }}"><img border="0" alt=""
+                        src="/media/{{ img.thumbnail2.name }}" /></a>
+                {% endfor %}
+            </ul>
         </ul>
 
         <!-- Next/Prev page links  -->
