@@ -8,7 +8,7 @@
             <div class="title">{{ album.title }}</div>
             <ul>
                 {% for img in images.object_list %}
-                    <a href="/media/{{ img.image.name }}"><img border="0" alt=""
+                    <a href="{% url photo.views.image img.pk %}"><img border="0" alt=""
                         src="/media/{{ img.thumbnail2.name }}" /></a>
                 {% endfor %}
             </ul>

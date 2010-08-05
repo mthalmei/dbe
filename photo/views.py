@@ -45,3 +45,8 @@ def album(request, pk):
 
     return render_to_response("photo/album.html", dict(album=album, images=images, user=request.user))
 
+def image(request, pk):
+    """Image page."""
+    img = Image.objects.get(pk=pk)
+    return render_to_response("photo/image.html", dict(image=img, user=request.user, backurl=request.META["HTTP_REFERER"]))
+
